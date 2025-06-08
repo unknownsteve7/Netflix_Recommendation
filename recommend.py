@@ -72,3 +72,8 @@ def recommend(movie):
         recommended_posters.append(fetch_poster(movie_id))
     
     return recommended_movies, recommended_posters
+def extract_genres(text):
+    return [i['name'] for i in ast.literal_eval(text)]
+
+movies['genres'] = movies['genres'].apply(extract_genres)
+all_genres = set(g for sublist in movies['genres'] for g in sublist)
