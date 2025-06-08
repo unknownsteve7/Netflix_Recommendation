@@ -38,7 +38,7 @@ if st.button("🔥 Recommend Me Movies"):
 
         for i, col in enumerate(cols):
             with col:
-                st.image(posters[i], use_column_width='always')
+                st.image(posters[i], use_container_width='always')
                 st.markdown(f"### [{names[i]}](#) ", unsafe_allow_html=True)  # placeholder for clickable link
                 stars = "⭐" * int(round(ratings[i]))
                 st.markdown(f"<span style='color:#f5c518; font-size: 20px;'>{stars}</span>", unsafe_allow_html=True)
