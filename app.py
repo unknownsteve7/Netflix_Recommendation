@@ -1,27 +1,29 @@
 import streamlit as st
-from recommend import recommend
-import streamlit.components.v1 as components
+from recommend import recommend, all_genres
 
-st.title("🎬 Netflix-Like Movie Recommender")
-movie_name = st.text_input("Enter a movie name:")
+st.set_page_config(page_title="Netflix Recommender", layout="wide")
+st.title("🍿 Netflix-Like Movie Recommender")
 
+# Input: Movie name
+movie_name = st.text_input("🎬 Enter a movie name:")
+
+# Input: Genre filter
+selected_genre = st.selectbox("🎭 Filter by Genre (optional)", ["None"] + sorted(list(all_genres)))
+
+# Button
 if st.button("Recommend"):
-    names, posters = recommend(movie_name)
-    
-    col1, col2, col3, col4, col5 = st.columns(5)
-    
-    with col1:
-        st.text(names[0])
-        st.image(posters[0])
-    with col2:
-        st.text(names[1])
-        st.image(posters[1])
-    with col3:
-        st.text(names[2])
-        st.image(posters[2])
-    with col4:
-        st.text(names[3])
-        st.image(posters[3])
-    with col5:
-        st.text(names[4])
-        st.image(posters[4])
+    genre_filter = None if selected_genre == "None" else selected_genre
+    names, posters, ratings = recommend(movie_name, genre_filter)
+
+    if names[0] == "Movie not found in dataset.":
+        st.error("🚫 Movie not found. Please try another.")
+    else:
+        # 5 columns layout
+        col1, col2, col3, col4, col5 = st.columns(5)
+        cols = [col1, col2, col3, col4, col5]
+
+        for i in range(5):
+            with cols[i]:
+                st.image(posters[i])
+                st.markdown(f"**{names[i]}**")
+                st.markdown(f"⭐ Rating: {ratings[i]}")
