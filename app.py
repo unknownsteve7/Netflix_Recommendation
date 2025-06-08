@@ -10,7 +10,7 @@ selected_genre = st.selectbox("🎭 Filter by Genre (optional)", ["None"] + sort
 
 # Button
 if st.button("Recommend"):
-  genre_filter = None if selected_genre == "None" else selected_genreAdd commentMore actions
+  genre_filter = None if selected_genre == "None" else selected_genre
     names, posters, ratings = recommend(movie_name, genre_filter)
 
     if names[0] == "Movie not found in dataset.":
