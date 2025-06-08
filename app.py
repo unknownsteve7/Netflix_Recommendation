@@ -6,7 +6,7 @@ st.set_page_config(page_title="Netflix Recommender", layout="wide")
 # Add slick background color and text color
 
 
-st.title("🍿 Netflix-Like Movie Recommender")
+st.title("Netflix Movie Recommender")
 
 # Input: Movie name
 movie_name = st.text_input("🎬 Enter a movie name:")
