@@ -4,19 +4,7 @@ from recommend import recommend, all_genres
 st.set_page_config(page_title="Netflix Recommender", layout="wide")
 
 # Add slick background color and text color
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background: linear-gradient(135deg, #1f2937, #3b82f6);
-        color: white;
-        min-height: 100vh;
-        padding: 1rem 2rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+
 
 st.title("🍿 Netflix-Like Movie Recommender")
 
