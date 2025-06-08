@@ -45,11 +45,30 @@ vectors = cv.fit_transform(new_df['tags']).toarray()
 
 similarity = cosine_similarity(vectors)
 
+
+import requests
+
+def fetch_poster(movie_id):
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key=9f83284458280d72500d4f2ebd14f2ef&language=en-US"
+    data = requests.get(url).json()
+    poster_path = data.get('poster_path')
+    full_path = f"https://image.tmdb.org/t/p/w500{poster_path}"
+    return full_path
+
 def recommend(movie):
     movie = movie.lower()
     if movie not in new_df['title'].str.lower().values:
-        return ["Movie not found in dataset."]
+        return ["Movie not found in dataset."], []
+    
     index = new_df[new_df['title'].str.lower() == movie].index[0]
     distances = similarity[index]
     movie_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
-    return [new_df.iloc[i[0]].title for i in movie_list]
+    
+    recommended_movies = []
+    recommended_posters = []
+    for i in movie_list:
+        movie_id = movies.iloc[i[0]].movie_id
+        recommended_movies.append(new_df.iloc[i[0]].title)
+        recommended_posters.append(fetch_poster(movie_id))
+    
+    return recommended_movies, recommended_posters
